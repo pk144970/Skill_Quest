@@ -1,0 +1,6 @@
+{
+  "name": "SkillQuest",
+  "description": "Gamified peer-to-peer skill exchange platform for college students to teach, learn, level up, and complete quests without money.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

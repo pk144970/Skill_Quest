@@ -1,0 +1,188 @@
+/*
+ * SkillQuest — Global Stylesheet
+ * ──────────────────────────────────────────────────────────────
+ * This single line imports the entire Tailwind CSS framework.
+ * Tailwind scans all .tsx files (see tailwind.config) and generates
+ * only the utility classes that are actually used, keeping the
+ * production CSS bundle small.
+ */
+
+@import "tailwindcss";
+
+/* Custom subtle scrollbar for sidebar and scrollable areas */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+/* ============================================================
+ * Light Mode Theme System
+ * Activated when .light-mode class is present on html/body/root
+ * ============================================================ */
+
+html.light-mode,
+body.light-mode {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  color-scheme: light;
+}
+
+/* Base surface containers */
+.light-mode,
+.light-mode .bg-slate-950,
+.light-mode.bg-slate-950 {
+  background-color: #f8fafc !important;
+}
+
+.light-mode .bg-slate-950\/95,
+.light-mode .bg-slate-950\/90,
+.light-mode .bg-slate-950\/85,
+.light-mode .bg-slate-950\/80,
+.light-mode .bg-slate-950\/70,
+.light-mode .bg-slate-950\/60,
+.light-mode .bg-slate-950\/50,
+.light-mode .bg-slate-950\/40 {
+  background-color: #f8fafc !important;
+}
+
+/* Modal dark backdrops — keep dark semi-transparent for modal focus */
+.light-mode div[class*="fixed inset-0"],
+.light-mode .fixed.inset-0 {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* Card surfaces */
+.light-mode .bg-slate-900,
+.light-mode .bg-slate-900\/95,
+.light-mode .bg-slate-900\/90,
+.light-mode .bg-slate-900\/80,
+.light-mode .bg-slate-900\/70,
+.light-mode .bg-slate-900\/60,
+.light-mode .bg-slate-900\/50,
+.light-mode .bg-slate-900\/40 {
+  background-color: #ffffff !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+}
+
+/* Secondary containers & tracks (bg-slate-800) */
+.light-mode .bg-slate-800,
+.light-mode .bg-slate-800\/80,
+.light-mode .bg-slate-800\/60,
+.light-mode .bg-slate-800\/50,
+.light-mode .bg-slate-800\/40 {
+  background-color: #f1f5f9 !important;
+}
+
+/* Hero gradient in light mode */
+.light-mode .from-indigo-900\/60,
+.light-mode .from-indigo-950\/60,
+.light-mode .from-violet-950\/40 {
+  --tw-gradient-from: #e0e7ff !important;
+}
+.light-mode .via-slate-900 {
+  --tw-gradient-stops: var(--tw-gradient-from), #f8fafc, var(--tw-gradient-to) !important;
+}
+.light-mode .to-slate-950 {
+  --tw-gradient-to: #f1f5f9 !important;
+}
+.light-mode .via-indigo-950\/40,
+.light-mode .via-amber-950\/30 {
+  --tw-gradient-stops: var(--tw-gradient-from), #ffffff, var(--tw-gradient-to) !important;
+}
+.light-mode .from-slate-900 {
+  --tw-gradient-from: #ffffff !important;
+}
+
+/* Borders */
+.light-mode .border-slate-800,
+.light-mode .border-slate-800\/90,
+.light-mode .border-slate-800\/80,
+.light-mode .border-slate-700,
+.light-mode .border-slate-700\/80,
+.light-mode .border-slate-700\/60 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Typography contrast */
+.light-mode .text-slate-100,
+.light-mode .text-slate-200 {
+  color: #0f172a !important;
+}
+
+.light-mode .text-slate-300 {
+  color: #334155 !important;
+}
+
+.light-mode .text-slate-400 {
+  color: #64748b !important;
+}
+
+.light-mode .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+/* Ensure colored badges and pill texts in light mode stay vibrant */
+.light-mode .text-amber-300,
+.light-mode .text-amber-400 {
+  color: #b45309 !important; /* amber-700 for high contrast readability */
+}
+.light-mode .text-indigo-300 {
+  color: #4f46e5 !important; /* indigo-600 */
+}
+.light-mode .text-violet-300 {
+  color: #7c3aed !important; /* violet-600 */
+}
+.light-mode .text-emerald-400,
+.light-mode .text-emerald-300 {
+  color: #059669 !important; /* emerald-600 */
+}
+
+/* Inputs, selects, and textareas */
+.light-mode input:not([type="checkbox"]):not([type="radio"]),
+.light-mode select,
+.light-mode textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+.light-mode input::placeholder,
+.light-mode textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Hover states */
+.light-mode .hover\:bg-slate-800:hover,
+.light-mode .hover\:bg-slate-800\/80:hover,
+.light-mode .hover\:bg-slate-800\/60:hover,
+.light-mode .hover\:bg-slate-700:hover {
+  background-color: #e2e8f0 !important;
+}
+
+.light-mode .hover\:text-slate-100:hover,
+.light-mode .hover\:text-slate-200:hover {
+  color: #0f172a !important;
+}
+
+.light-mode .hover\:border-slate-700:hover,
+.light-mode .hover\:border-slate-600:hover {
+  border-color: #cbd5e1 !important;
+}
+
+/* Custom scrollbar in light mode */
+.light-mode .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.25);
+}
+.light-mode .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.45);
+}

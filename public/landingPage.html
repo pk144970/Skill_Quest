@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Quest</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at center, #111a36 0%, #000000 100%);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+        }
+
+        /* Entrance Animation for Main Content (Down to Up) */
+        @keyframes slideUpFade {
+            0% {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Floating Animation for Background Popups */
+        @keyframes floatAround {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-30px) translateX(15px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        /* Fade-in Animation for Popups */
+        @keyframes popupFade {
+            0% { opacity: 0; transform: scale(0.5) translateY(30px); }
+            15% { opacity: 0.5; transform: scale(1) translateY(0); }
+            85% { opacity: 0.5; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(1.1) translateY(-40px); }
+        }
+
+        .animate-slide-up {
+            opacity: 0;
+            animation: slideUpFade 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .delay-1 { animation-delay: 0.3s; }
+        .delay-2 { animation-delay: 0.7s; }
+
+        .motivational-card {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 1;
+            opacity: 0;
+        }
+
+        /* Enhanced Glow effects */
+        .glow {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            z-index: 0;
+            filter: blur(140px);
+            opacity: 0.6;
+        }
+
+        .glow-1 {
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            top: -20%;
+            left: -10%;
+        }
+
+        .glow-2 {
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            bottom: -20%;
+            right: -10%;
+        }
+
+
+        .glow-3 {
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1000px;
+            height: 1000px;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center text-white relative">
+
+    <!-- Full Screen Background Container for Popups -->
+    <div id="popup-container" class="absolute inset-0 z-0 pointer-events-none"></div>
+    
+    <!-- Background Light Sources -->
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+
+    <!-- Main Content -->
+    <div class="text-center px-4 relative z-10">
+        <h1 class="text-6xl md:text-9xl font-black tracking-tighter mb-6 animate-slide-up delay-1">
+            SKILL <span class="text-blue-500 drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]">QUEST</span>
+        </h1>
+
+        <p class="text-gray-300 text-lg md:text-xl mb-12 max-w-lg mx-auto animate-slide-up delay-1" style="animation-delay: 0.5s;">
+            A gamified skill learning platform
+        </p>
+
+        <div class="animate-slide-up delay-2">
+              
+            <button id="get-started-btn" class="group relative inline-flex items-center justify-center px-10 py-5 font-bold text-white transition-all duration-300 bg-blue-600 rounded-full hover:bg-blue-500 shadow-[0_0_40px_rgba(59,130,246,0.4)] active:scale-95 cursor-pointer">
+                <span class="relative z-10">GET STARTED</span>
+                <svg class="w-6 h-6 ml-3 transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast UI -->
+    <div id="toast" class="fixed bottom-12 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold shadow-2xl transition-all duration-500 opacity-0 translate-y-10 pointer-events-none z-50">
+        JOURNEY STARTED
+    </div>
+
+    <script>
+        const quotes = [
+            "Believe in yourself", "Work Hard", "Stay Humble", "Dream Big", 
+            "Don't Give Up", "Focus on the goal", "Be Better Every Day", 
+            "Learn and Grow", "Stay Hungry", "Success is Earned", 
+            "Consistency wins", "Mindset is Everything", "Keep Going",
+            "Make it happen", "Push your limits", "No Excuses",
+            "Action beats intent", "Rise and Grind", "Master your craft",
+            "Discipline equals freedom", "Execute", "Victory is near"
+        ];
+
+        const container = document.getElementById('popup-container');
+
+        function createPopup() {
+            const card = document.createElement('div');
+            card.className = 'motivational-card';
+            card.innerText = quotes[Math.floor(Math.random() * quotes.length)];
+            
+            // Randomized positioning spanning the entire screen (0 to 100%)
+            const top = Math.random() * 95; 
+            const left = Math.random() * 90;
+            
+            card.style.top = `${top}%`;
+            card.style.left = `${left}%`;
+            
+            // Varying durations for organic feel
+            const animDuration = 5 + Math.random() * 5;
+            const floatDuration = 10 + Math.random() * 10;
+            
+            card.style.animation = `
+                popupFade ${animDuration}s ease-in-out forwards, 
+                floatAround ${floatDuration}s ease-in-out infinite
+            `;
+            
+            container.appendChild(card);
+            
+            // Cleanup
+            setTimeout(() => {
+                card.remove();
+            }, animDuration * 1000);
+        }
+
+        // Increase frequency: spawn a popup every 800ms to fill the screen
+        setInterval(createPopup, 800);
+        
+        // Initial burst to populate the screen instantly
+        for(let i=0; i<15; i++) {
+            setTimeout(createPopup, i * 150);
+        }
+
+        // Button interaction with smooth navigation
+        const btn = document.getElementById('get-started-btn') || document.querySelector('button');
+        const toast = document.getElementById('toast');
+        
+        if (btn) {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (toast) {
+                    toast.classList.remove('opacity-0', 'translate-y-10');
+                    toast.classList.add('opacity-1', 'translate-y-0');
+                }
+                
+                setTimeout(() => {
+                    if (window.location.protocol.startsWith('http')) {
+                        window.location.href = '/';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                }, 500);
+            });
+        }
+    </script>
+</body>
+</html>
