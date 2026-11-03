@@ -6,3 +6,11 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# SQLite runtime files — auto-generated, never commit
+*.db
+*.db-shm
+*.db-wal
+
+# Database backups — contain user data, keep local only
+src/data/backups/
