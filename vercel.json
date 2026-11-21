@@ -1,15 +1,23 @@
 {
   "version": 2,
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": "dist",
   "builds": [
     {
-      "src": "dist/server.cjs",
-      "use": "@vercel/node"
+      "src": "api/index.ts",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "src/**",
+          "package.json"
+        ]
+      }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/dist/server.cjs"
+      "dest": "/api/index.ts"
     },
     {
       "src": "/landingPage.html",
