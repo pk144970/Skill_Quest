@@ -33,10 +33,25 @@ import {
   INITIAL_REVIEWS
 } from '../../data/seedData';
 
-// Paths
-const DATA_DIR = path.join(process.cwd(), 'src', 'data');
+// Paths — use /tmp for writable storage on read-only filesystems (Vercel, etc.)
+// In development and Railway/Render (writable fs), src/data/ is used directly.
+// On Vercel and other read-only platforms, /tmp is the only writable location.
+const IS_READONLY_FS = (() => {
+  try {
+    fs.accessSync(path.join(process.cwd(), 'src', 'data'), fs.constants.W_OK);
+    return false;
+  } catch {
+    return true;
+  }
+})();
+
+const DATA_DIR = IS_READONLY_FS
+  ? '/tmp/skillquest-data'
+  : path.join(process.cwd(), 'src', 'data');
 const DB_SQLITE_PATH = path.join(DATA_DIR, 'skillquest.db');
-const DB_JSON_PATH = path.join(DATA_DIR, 'db.json');
+const DB_JSON_PATH = IS_READONLY_FS
+  ? '/tmp/skillquest-data/db.json'
+  : path.join(process.cwd(), 'src', 'data', 'db.json');
 const BACKUPS_DIR = path.join(DATA_DIR, 'backups');
 
 export interface DbStats {

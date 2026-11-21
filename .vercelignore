@@ -1,0 +1,11 @@
+# Vercel deployment — files to exclude from upload
+.git
+node_modules
+src/data/backups
+src/data/skillquest.db
+src/data/skillquest.db-shm
+src/data/skillquest.db-wal
+.env
+.env.local
+*.log
+coverage
